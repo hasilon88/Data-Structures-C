@@ -1,7 +1,3 @@
-//
-// Created by hasil on 3/29/2024.
-//
-
 #ifndef ARRAYLIST_H
 #define ARRAYLIST_H
 
@@ -13,18 +9,18 @@ typedef struct ArrayList ArrayList;
 
 struct ArrayList {
     int *array;
-    int size;
+    int length;
 
     bool (*add)(ArrayList *self, int value);
-    bool (*addAll)(ArrayList *self, int array[], int size);
+    bool (*addAll)(ArrayList *self, int array[], int length);
     bool (*delete)(ArrayList *self, int index);
     bool (*clear)(ArrayList *self);
 
     int (*get)(ArrayList *self, int index);
     int (*indexOf)(ArrayList *self, int value);
     bool (*contains)(ArrayList *self, int value);
-
-    void (*toString)(ArrayList *self);
+    int (*size)(ArrayList *self);
+    char *(*toString)(ArrayList *self); // Modified to return string
     void (*destroy)(ArrayList *self);
 };
 

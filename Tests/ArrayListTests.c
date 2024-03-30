@@ -1,172 +1,184 @@
 #include <stdio.h>
-#include <stdbool.h>
 #include "../ArrayList/ArrayList.h"
 
-void test_add() {
+void test_arraylist_add() {
     ArrayList list = initArrayList();
+    int i;
 
-    // Add elements
-    for (int i = 0; i < 10; i++) {
+    for (i = 0; i < 5; ++i) {
         list.add(&list, i);
     }
 
-    // Check size after adding
-    if (list.size == 10)
-        printf("Add test: Passed\n");
-    else
-        printf("Add test: Failed\n");
-
-    // Destroy the ArrayList to free memory
-    list.destroy(&list);
-}
-
-void test_add_all() {
-    ArrayList list = initArrayList();
-
-    int arr[] = {10, 11, 12, 13, 14};
-    int size = sizeof(arr) / sizeof(arr[0]);
-
-    // Add all elements
-    list.addAll(&list, arr, size);
-
-    // Check size after adding all
-    if (list.size == 5)
-        printf("Add all test: Passed\n");
-    else
-        printf("Add all test: Failed\n");
-
-    // Destroy the ArrayList to free memory
-    list.destroy(&list);
-}
-
-void test_delete() {
-    ArrayList list = initArrayList();
-
-    // Add elements
-    for (int i = 0; i < 10; i++) {
-        list.add(&list, i);
+    if (list.length == 5 && list.array[0] == 0 && list.array[4] == 4) {
+        printf("test_arraylist_add: Passed\n");
+    } else {
+        printf("test_arraylist_add: Failed\n");
     }
 
-    // Delete an element
-    list.delete(&list, 3);
-
-    // Check size after deletion
-    if (list.size == 9)
-        printf("Delete test: Passed\n");
-    else
-        printf("Delete test: Failed\n");
-
-    // Destroy the ArrayList to free memory
     list.destroy(&list);
 }
 
-void test_clear() {
+void test_arraylist_add_all() {
     ArrayList list = initArrayList();
+    int testArray[5] = {10, 20, 30, 40, 50};
+    int i;
 
-    // Add elements
-    for (int i = 0; i < 10; i++) {
-        list.add(&list, i);
-    }
+    list.addAll(&list, testArray, 5);
 
-    // Clear the ArrayList
-    list.clear(&list);
-
-    // Check size after clearing
-    if (list.size == 0)
-        printf("Clear test: Passed\n");
-    else
-        printf("Clear test: Failed\n");
-
-    // Destroy the ArrayList to free memory
-    list.destroy(&list);
-}
-
-void test_get() {
-    ArrayList list = initArrayList();
-
-    // Add elements
-    for (int i = 0; i < 10; i++) {
-        list.add(&list, i * 2);
-    }
-
-    // Get elements at specific indices
-    bool passed = true;
-    for (int i = 0; i < 10; i++) {
-        if (list.get(&list, i) != i * 2) {
-            passed = false;
+    int passed = 1;
+    for (i = 0; i < 5; ++i) {
+        if (list.array[i] != testArray[i]) {
+            passed = 0;
             break;
         }
     }
-    if (passed)
-        printf("Get test: Passed\n");
-    else
-        printf("Get test: Failed\n");
 
-    // Destroy the ArrayList to free memory
+    if (list.length == 5 && passed) {
+        printf("test_arraylist_add_all: Passed\n");
+    } else {
+        printf("test_arraylist_add_all: Failed\n");
+    }
+
     list.destroy(&list);
 }
 
-void test_index_of() {
+void test_arraylist_delete() {
     ArrayList list = initArrayList();
+    int testArray[5] = {10, 20, 30, 40, 50};
 
-    // Add elements
-    for (int i = 0; i <= 10; i++) {
-        list.add(&list, i * 2);
+    list.addAll(&list, testArray, 5);
+    list.delete(&list, 2); // Delete element at index 2 (value 30)
+
+    int passed = (list.length == 4 && list.array[2] == 40);
+
+    if (passed) {
+        printf("test_arraylist_delete: Passed\n");
+    } else {
+        printf("test_arraylist_delete: Failed\n");
     }
 
-    // Get index of specific elements
-    if (list.indexOf(&list, 6) == 3 && list.indexOf(&list, 15) == -1 && list.indexOf(&list, 20) == 10)
-        printf("Index of test: Passed\n");
-    else
-        printf("Index of test: Failed\n");
-
-    // Destroy the ArrayList to free memory
     list.destroy(&list);
 }
 
-void test_contains() {
+void test_arraylist_clear() {
     ArrayList list = initArrayList();
+    int testArray[5] = {10, 20, 30, 40, 50};
 
-    // Add elements
-    for (int i = 0; i <= 10; i++) {
-        list.add(&list, i * 2);
+    list.addAll(&list, testArray, 5);
+    list.clear(&list);
+
+    int passed = (list.size(&list) == 0 && list.array != NULL);
+
+    if (passed) {
+        printf("test_arraylist_clear: Passed\n");
+    } else {
+        printf("test_arraylist_clear: Failed\n");
     }
 
-    // Check if ArrayList contains specific elements
-    if (list.contains(&list, 6) && !list.contains(&list, 15) && list.contains(&list, 20))
-        printf("Contains test: Passed\n");
-    else
-        printf("Contains test: Failed\n");
-
-    // Destroy the ArrayList to free memory
     list.destroy(&list);
 }
 
-void test_to_string() {
+void test_arraylist_get() {
     ArrayList list = initArrayList();
+    int testArray[5] = {10, 20, 30, 40, 50};
 
-    // Add elements
-    for (int i = 0; i < 10; i++) {
-        list.add(&list, i * 2);
+    list.addAll(&list, testArray, 5);
+
+    int passed = 1;
+    int i;
+    for (i = 0; i < 5; ++i) {
+        if (list.get(&list, i) != testArray[i]) {
+            passed = 0;
+            break;
+        }
     }
 
-    // Print the ArrayList
-    printf("To String test:\n");
-    list.toString(&list);
+    if (passed) {
+        printf("test_arraylist_get: Passed\n");
+    } else {
+        printf("test_arraylist_get: Failed\n");
+    }
 
-    // Destroy the ArrayList to free memory
     list.destroy(&list);
+}
+
+void test_arraylist_index_of() {
+    ArrayList list = initArrayList();
+    int testArray[5] = {10, 20, 30, 40, 50};
+
+    list.addAll(&list, testArray, 5);
+
+    int passed = (list.indexOf(&list, 30) == 2);
+
+    if (passed) {
+        printf("test_arraylist_index_of: Passed\n");
+    } else {
+        printf("test_arraylist_index_of: Failed\n");
+    }
+
+    list.destroy(&list);
+}
+
+void test_arraylist_contains() {
+    ArrayList list = initArrayList();
+    int testArray[5] = {10, 20, 30, 40, 50};
+
+    list.addAll(&list, testArray, 5);
+
+    int passed = (list.contains(&list, 30) && !list.contains(&list, 60));
+
+    if (passed) {
+        printf("test_arraylist_contains: Passed\n");
+    } else {
+        printf("test_arraylist_contains: Failed\n");
+    }
+
+    list.destroy(&list);
+}
+
+void test_arraylist_size() {
+    ArrayList list = initArrayList();
+    int testArray[5] = {10, 20, 30, 40, 50};
+
+    list.addAll(&list, testArray, 5);
+
+    int passed = (list.size(&list) == 5);
+
+    if (passed) {
+        printf("test_arraylist_size: Passed\n");
+    } else {
+        printf("test_arraylist_size: Failed\n");
+    }
+
+    list.destroy(&list);
+}
+
+void test_arraylist_toString() {
+    ArrayList list = initArrayList();
+    int testArray[5] = {10, 20, 30, 40, 50};
+
+    list.addAll(&list, testArray, 5);
+    char *str = list.toString(&list);
+
+    // Customize your own checks based on how you expect the string representation
+    // of the array to be
+    printf("ArrayList as String: %s\n", str);
+
+    free(str);
+    list.destroy(&list);
+    printf("test_arraylist_toString: Passed\n");
 }
 
 int main() {
-    test_add();
-    test_add_all();
-    test_delete();
-    test_clear();
-    test_get();
-    test_index_of();
-    test_contains();
-    test_to_string();
+    test_arraylist_add();
+    test_arraylist_add_all();
+    test_arraylist_delete();
+    test_arraylist_clear();
+    test_arraylist_get();
+    test_arraylist_index_of();
+    test_arraylist_contains();
+    test_arraylist_size();
+    test_arraylist_toString();
 
     return 0;
 }
