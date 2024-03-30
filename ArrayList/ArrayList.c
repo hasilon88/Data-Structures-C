@@ -14,13 +14,14 @@ struct ArrayList {
     bool (*clear)(ArrayList *self);
 
     int (*get)(ArrayList *self, int index);
+    int (*indexOf)(ArrayList *self, int value);
     bool (*contains)(ArrayList *self, int value);
 
     void (*toString)(ArrayList *self);
-    void (*deleteArrayList)(ArrayList *self);
+    void (*destroy)(ArrayList *self);
 };
 
-bool add(ArrayList *self, int value) {
+bool arraylist_add(ArrayList *self, int value) {
     if (self->size < 10) {
         self->array[self->size++] = value;
         return true;
@@ -36,7 +37,7 @@ bool add(ArrayList *self, int value) {
     }
 }
 
-bool addAll(ArrayList *self, int array[], int size) {
+bool arraylist_add_all(ArrayList *self, int array[], int size) {
     int initialSize = self->size;
 
     for (int i = 0; i < size; ++i) {
@@ -47,7 +48,7 @@ bool addAll(ArrayList *self, int array[], int size) {
     return initialSize != self->size;
 }
 
-bool delete(ArrayList *self, int index) {
+bool arraylist_delete(ArrayList *self, int index) {
     if (self->size < 1 || (index > self->size-1 || index < 0)) {
         return false;
     }
@@ -73,7 +74,7 @@ bool delete(ArrayList *self, int index) {
     return true;
 }
 
-bool clear(ArrayList *self) {
+bool arraylist_clear(ArrayList *self) {
     free(self->array);
 
     int *tempArray = (int *)malloc(10 * sizeof(int));
@@ -87,7 +88,7 @@ bool clear(ArrayList *self) {
     return true;
 }
 
-int get(ArrayList *self, int index) {
+int arraylist_get(ArrayList *self, int index) {
     if (index < 0 || index > self->size-1) {
         printf("Out of range");
         return -1;
@@ -95,15 +96,25 @@ int get(ArrayList *self, int index) {
     return self->array[index];
 }
 
-bool contains(ArrayList *self, int value) {
+int arraylist_index_of(ArrayList *self, int value) {
     for (int i = 0; i < self->size; ++i) {
-        if (self->array[i] == value)
+        if (self->get(self, i) == value)
+            return i;
+    }
+
+    return -1;
+}
+
+bool arraylist_contains(ArrayList *self, int value) {
+    for (int i = 0; i < self->size; ++i) {
+        if (self->array[i] == value) {
             return true;
+        }
     }
     return false;
 }
 
-void toString(ArrayList* arrayList) {
+void arraylist_toString(ArrayList* arrayList) {
     printf("\n[");
     for (int i = 0; i < arrayList->size - 1; i++) {
         printf("%d,", arrayList->array[i]);
@@ -114,11 +125,11 @@ void toString(ArrayList* arrayList) {
     printf("]\n");
 }
 
-void deleteArrayList(ArrayList* arrayList) {
+void arraylist_destroy(ArrayList* arrayList) {
     free(arrayList->array);
 }
 
-ArrayList createArrayList() {
+ArrayList initArrayList() {
     ArrayList arrayList;
     arrayList.array = (int *)malloc(10 * sizeof(int));
     if (arrayList.array == NULL) {
@@ -128,14 +139,15 @@ ArrayList createArrayList() {
 
     arrayList.size = 0;
 
-    arrayList.add = add;
-    arrayList.addAll = addAll;
-    arrayList.delete = delete;
-    arrayList.get = get;
-    arrayList.contains = contains;
-    arrayList.toString = toString;
-    arrayList.deleteArrayList = deleteArrayList;
-    arrayList.clear = clear;
+    arrayList.add = arraylist_add;
+    arrayList.addAll = arraylist_add_all;
+    arrayList.delete = arraylist_delete;
+    arrayList.get = arraylist_get;
+    arrayList.indexOf = arraylist_index_of;
+    arrayList.contains = arraylist_contains;
+    arrayList.toString = arraylist_toString;
+    arrayList.destroy = arraylist_destroy;
+    arrayList.clear = arraylist_clear;
 
     return arrayList;
 }

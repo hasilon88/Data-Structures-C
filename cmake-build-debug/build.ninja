@@ -49,11 +49,17 @@ cmake_ninja_workdir = C$:/Users/hasil/CLionProjects/DataStructures/cmake-build-d
 
 build cmake_object_order_depends_target_DataStructures: phony || CMakeFiles/DataStructures.dir
 
-build CMakeFiles/DataStructures.dir/ArrayList.c.obj: C_COMPILER__DataStructures_unscanned_Debug C$:/Users/hasil/CLionProjects/DataStructures/ArrayList.c || cmake_object_order_depends_target_DataStructures
-  DEP_FILE = CMakeFiles\DataStructures.dir\ArrayList.c.obj.d
+build CMakeFiles/DataStructures.dir/ArrayList/ArrayList.c.obj: C_COMPILER__DataStructures_unscanned_Debug C$:/Users/hasil/CLionProjects/DataStructures/ArrayList/ArrayList.c || cmake_object_order_depends_target_DataStructures
+  DEP_FILE = CMakeFiles\DataStructures.dir\ArrayList\ArrayList.c.obj.d
   FLAGS = -g -std=gnu11 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles\DataStructures.dir
-  OBJECT_FILE_DIR = CMakeFiles\DataStructures.dir
+  OBJECT_FILE_DIR = CMakeFiles\DataStructures.dir\ArrayList
+
+build CMakeFiles/DataStructures.dir/Tests/ArrayListTests.c.obj: C_COMPILER__DataStructures_unscanned_Debug C$:/Users/hasil/CLionProjects/DataStructures/Tests/ArrayListTests.c || cmake_object_order_depends_target_DataStructures
+  DEP_FILE = CMakeFiles\DataStructures.dir\Tests\ArrayListTests.c.obj.d
+  FLAGS = -g -std=gnu11 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\DataStructures.dir
+  OBJECT_FILE_DIR = CMakeFiles\DataStructures.dir\Tests
 
 
 # =============================================================================
@@ -63,7 +69,7 @@ build CMakeFiles/DataStructures.dir/ArrayList.c.obj: C_COMPILER__DataStructures_
 #############################################
 # Link the executable DataStructures.exe
 
-build DataStructures.exe: C_EXECUTABLE_LINKER__DataStructures_Debug CMakeFiles/DataStructures.dir/ArrayList.c.obj
+build DataStructures.exe: C_EXECUTABLE_LINKER__DataStructures_Debug CMakeFiles/DataStructures.dir/ArrayList/ArrayList.c.obj CMakeFiles/DataStructures.dir/Tests/ArrayListTests.c.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\DataStructures.dir

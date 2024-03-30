@@ -4,5 +4,6 @@ project(DataStructures C)
 set(CMAKE_C_STANDARD 11)
 
 add_executable(DataStructures
-        ArrayList.c
-        ArrayList.h)
+        ArrayList/ArrayList.c
+        ArrayList/ArrayList.h
+        Tests/ArrayListTests.c)
